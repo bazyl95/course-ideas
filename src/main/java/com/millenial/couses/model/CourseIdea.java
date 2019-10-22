@@ -1,14 +1,23 @@
 package com.millenial.couses.model;
 
+import com.github.slugify.Slugify;
+
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class CourseIdea {
+    private String slug;
     private String title;
     private String creator;
+    private Set<String> voters;
 
     public CourseIdea(String title, String creator) {
+        voters = new HashSet<>();
         this.title = title;
         this.creator = creator;
+        Slugify slugify = new Slugify();
+        slug = slugify.slugify(title);
     }
 
     public String getTitle() {
@@ -17,6 +26,18 @@ public class CourseIdea {
 
     public String getCreator() {
         return creator;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public boolean addVoter(String voterUsername) {
+        return voters.add(voterUsername);
+    }
+
+    public int getVoteCount() {
+        return voters.size();
     }
 
     @Override
